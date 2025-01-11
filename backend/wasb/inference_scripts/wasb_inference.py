@@ -119,8 +119,18 @@ def run_inference(weights, input_path, overlay=False):
         if not ret:
             break
 
-        processed_frame = detect_player(frame)
-        print(processed_frame)
+        processed_frame, pose_landmarks_list = detect_player(frame)
+
+        player_x, player_y = -1, -1
+        if pose_landmarks_list:
+            # Assume the first detected person is the player of interest
+            right_foot_index = 30  # Adjust index based on the landmark definition
+            for landmarks in pose_landmarks_list:
+                right_foot = landmarks[right_foot_index]
+                player_x, player_y = right_foot  # Already scaled to pixel coordinates
+                break
+
+        cv2.circle(frame, (player_x, player_y), 10, (255, 0, 0), 2)
 
         frames_buffer.append(frame)
         if len(frames_buffer) == config['frames_in']:
