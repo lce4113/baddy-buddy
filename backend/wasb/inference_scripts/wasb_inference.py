@@ -5,6 +5,7 @@ import torchvision.transforms as transforms
 import numpy as np
 import pandas as pd
 from model_definitions.wasb import HRNet
+from stats_helper.player_detector import detect_player
 
 def preprocess_frame(frame, transform):
     return transform(frame)
@@ -117,6 +118,9 @@ def run_inference(weights, input_path, overlay=False):
         ret, frame = cap.read()
         if not ret:
             break
+
+        processed_frame = detect_player(frame)
+        print(processed_frame)
 
         frames_buffer.append(frame)
         if len(frames_buffer) == config['frames_in']:
