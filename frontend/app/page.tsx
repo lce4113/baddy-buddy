@@ -1,5 +1,5 @@
-"use client"
 import React from 'react';
+import Link from 'next/link';
 
 function App() {
   const gameHistory = [
@@ -11,84 +11,48 @@ function App() {
   ];
 
   return (
-    <div style={styles.container}>
-      <header style={styles.header}>
-        <h1 style={styles.title}>Baddy Buddy</h1>
-        <p style={styles.subtitle}>Advanced Analytics for Badminton</p>
-        <button style={styles.uploadButton}>
-          UPLOAD NEW GAME <span style={styles.icon}>📤</span>
-        </button>
+    <div className="font-sans bg-gray-900 text-white min-h-screen p-5 relative">
+      <header className="text-center mb-10">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+          Baddy Buddy
+        </h1>
+        <p className="text-gray-400">Advanced Analytics for Badminton</p>
+        <a
+          href="/stats/0"
+          className="mt-5 inline-block px-4 py-2 text-lg font-bold text-white bg-black rounded hover:bg-gray-800"
+        >
+          UPLOAD NEW GAME <span className="ml-2">📤</span>
+        </a>
       </header>
 
-      <section style={styles.gameHistorySection}>
-        <h2 style={styles.gameHistoryTitle}>Game History</h2>
-        <ul style={styles.gameList}>
+      <section className="text-center">
+        <h2 className="text-2xl mb-5">Game History</h2>
+        <ul className="list-none p-0">
           {gameHistory.map((game) => (
-            <li key={game.id} style={styles.gameItem}>
-              {game.name} - {game.date}
+            <li
+              key={game.id}
+              className="bg-gray-800 p-4 mb-3 rounded cursor-pointer hover:bg-gray-700 w-11/12 max-w-lg mx-auto"
+            >
+              <a href={`/stats/${game.id}`} className="block text-white">
+                {game.name} - {game.date}
+              </a>
             </li>
           ))}
         </ul>
       </section>
+      {/* <img
+        src="/birdie-baddie.png"
+        alt="Decorative Image"
+        className="absolute bottom-5 right-5 w-20 h-20 object-contain"
+      /> */}
+      {/* Add an Image with Hover Animation */}
+      <img
+        src="/birdie-baddie.png"
+        alt="Decorative Graphic"
+        className="absolute bottom-5 right-5 w-20 h-20 object-contain max-w-xs transition duration-300 ease-in-out hover:scale-150"
+      />
     </div>
   );
 }
-
-const styles = {
-  container: {
-    fontFamily: 'Arial, sans-serif',
-    backgroundColor: '#1e1e1e',
-    color: '#fff',
-    minHeight: '100vh',
-    padding: '20px',
-  },
-  header: {
-    textAlign: 'center',
-    marginBottom: '40px',
-  },
-  title: {
-    fontSize: '36px',
-    fontWeight: 'bold',
-    color: '#bb00ff',
-  },
-  subtitle: {
-    fontSize: '16px',
-    color: '#aaaaaa',
-  },
-  uploadButton: {
-    marginTop: '20px',
-    padding: '10px 20px',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    color: '#fff',
-    backgroundColor: '#000',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
-  icon: {
-    marginLeft: '10px',
-  },
-  gameHistorySection: {
-    textAlign: 'center',
-  },
-  gameHistoryTitle: {
-    fontSize: '24px',
-    marginBottom: '20px',
-  },
-  gameList: {
-    listStyle: 'none',
-    padding: 0,
-  },
-  gameItem: {
-    backgroundColor: '#111',
-    padding: '15px 20px',
-    margin: '10px auto',
-    borderRadius: '8px',
-    width: '90%',
-    maxWidth: '400px',
-    color: '#fff',
-  },
-};
 
 export default App;
