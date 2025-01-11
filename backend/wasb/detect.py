@@ -38,4 +38,4 @@ def detect(input):
 
 if __name__ == "__main__":
     # python main.py --weights badminton --model wasb --input test_videos/input.mov
-    detect(input="test_videos/input.mov")
+    detect(input="test_videos/shortened.mov")
