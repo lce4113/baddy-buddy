@@ -49,6 +49,12 @@ function StatsPage() {
             <span className="text-gray-500">[Movement Tracking Visualization Placeholder]</span>
           </div>
         </section>
+
+        <img
+        src="/birdie-baddie.png"
+        alt="Decorative Graphic"
+        className="fixed bottom-5 right-5 w-20 h-20 object-contain max-w-xs transition duration-300 ease-in-out hover:scale-150"
+        />
       </main>
     </div>
   );
