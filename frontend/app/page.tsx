@@ -17,12 +17,12 @@ function App() {
           Baddy Buddy
         </h1>
         <p className="text-gray-400">Advanced Analytics for Badminton</p>
-        <a
+        <Link
           href="/stats/0"
           className="mt-5 inline-block px-4 py-2 text-lg font-bold text-white bg-black rounded hover:bg-gray-800"
         >
           UPLOAD NEW GAME <span className="ml-2">📤</span>
-        </a>
+        </Link>
       </header>
 
       <section className="text-center">
