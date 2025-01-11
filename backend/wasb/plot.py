@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Load the CSV file
-file_name = "input3_output_wasb.csv"
+file_name = "test_videos/input3_output_wasb.csv"
 data = pd.read_csv(file_name)
 
 # Constants and thresholds

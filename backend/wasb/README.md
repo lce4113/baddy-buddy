@@ -1,6 +1,6 @@
 # My Stuff
 
-python main.py --weights badminton --model wasb --input inputs/input.mov
+python main.py --weights badminton --model wasb --input test_videos/input.mov
 
 
 
