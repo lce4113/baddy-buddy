@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import h337 from "heatmap.js";
 import Image from "next/image";
-import { DataPoint } from "./page";
+import { DataPoint } from "../page";
 
 export const CourtHeatmap = ({
   data,
