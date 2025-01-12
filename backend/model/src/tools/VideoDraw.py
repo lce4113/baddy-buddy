@@ -198,3 +198,4 @@ for root, dirs, files in os.walk(folder_path):
                     pbar.update(1)
             # Release the video capture and writer objects
             video.release()
+        
