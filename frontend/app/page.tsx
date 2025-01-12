@@ -44,20 +44,25 @@ export default function Page() {
         setStatus(`Upload successful: ${result.message}`);
 
         console.log(file);
-        console.log(file.name.split('.')[0])
-        let name = file.name.split('.')[0]
-        console.log("http://127.0.0.1:5000/fetch_player_position?video_id=" + name)
-        const data = await fetch("http://127.0.0.1:5000/fetch_player_position?video_id=" + name, {
-          method: "GET",
-        })
-        let dataJson = await data.json();
+        console.log(file.name.split(".")[0]);
+        const name = file.name.split(".")[0];
+        console.log(
+          "http://127.0.0.1:5000/fetch_player_position?video_id=" + name
+        );
+        const data = await fetch(
+          "http://127.0.0.1:5000/fetch_player_position?video_id=" + name,
+          {
+            method: "GET",
+          }
+        );
+        const dataJson = await data.json();
         console.log(dataJson);
         // if (!data.ok) {
         //     throw new Error(`HTTP error! status: ${res.status}`);
         //   }
         //   return res.json(); // Parse the response body as JSON
         // }
-       
+
         // // console.log(resData); // Log the parsed response body
         // const newData = processResData(resData);
         // setData(newData);
@@ -66,14 +71,8 @@ export default function Page() {
         // // console.log(processResData(resData));
         // console.log(newData);
 
-
         // console.error("Fetch error:", err);
-
-
-
-
       } else {
-
         setStatus(`Error: ${result.error}`);
       }
       setIsLoading(false);
