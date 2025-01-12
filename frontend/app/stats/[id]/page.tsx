@@ -4,20 +4,8 @@ import React, { useEffect, useState } from "react";
 import { CourtHeatmap } from "@/app/components/heatmap/Heatmap";
 import { ShotPlot } from "@/app/components/shotplot/Shotplot";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { CourtHeatmap } from "@/app/heatmap/Heatmap";
-import { ShotPlot } from "@/app/shotplot/Shotplot";
-import Link from "next/link";
 
 function StatsPage() {
-  const [heatmapData, setHeatmapData] = useState<string | null>({
-    lData: [],
-    rData: [],
-  });
-  const [shotplotData, setShotplotData] = useState<string | null>({
-    lData: [],
-    rData: [],
-  });
   const [heatmapData, setHeatmapData] = useState<string | null>({
     lData: [],
     rData: [],
