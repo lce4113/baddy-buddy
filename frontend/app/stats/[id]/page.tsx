@@ -1,6 +1,20 @@
-import React from 'react';
+"use client"
+
+import React, { useEffect, useState } from 'react';
+import { CourtHeatmap } from '@/app/heatmap/Heatmap';
 
 function StatsPage() {
+  const [data, setData] = useState<string | null>({lData: [], rData: []});
+
+  useEffect(() => {
+    console.log("test");
+    const storedData = JSON.parse(localStorage.getItem("mock_data"));
+    if (storedData) {
+      setData(storedData);
+    }
+    console.log(storedData);
+  }, []);
+
   return (
     <div className="font-sans bg-gray-900 text-white min-h-screen p-5">
       <header className="text-center mb-10">
@@ -45,9 +59,7 @@ function StatsPage() {
         <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto">
           <h2 className="text-2xl font-semibold mb-4">Movement Tracking</h2>
           <p className="text-gray-400 mb-4">Observe your movement patterns.</p>
-          <div className="bg-gray-700 h-64 flex items-center justify-center rounded">
-            <span className="text-gray-500">[Movement Tracking Visualization Placeholder]</span>
-          </div>
+          <CourtHeatmap data={data} radius={10} width={window.innerWidth * 0.8} />
         </section>
 
         <img
