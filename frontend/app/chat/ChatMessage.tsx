@@ -18,7 +18,7 @@ export default function ChatMessage({
       <div className="max-w-2xl mx-auto flex space-x-4">
         <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0">
           {role === "assistant" ? (
-            <div className="bg-green-500 rounded-sm w-full h-full flex items-center justify-center text-white text-sm font-bold">
+            <div className="bg-green-500 rounded-sm w-full h-full  text-white text-sm font-bold">
               <Image
                 src="/birdie-baddie.png" // Replace with the path to your image
                 alt="Icon"
