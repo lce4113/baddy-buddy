@@ -73,7 +73,6 @@ export default function Page() {
 
 
       } else {
-        toast.error('Video failed to upload');
 
         setStatus(`Error: ${result.error}`);
       }
