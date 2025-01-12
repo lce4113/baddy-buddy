@@ -3,19 +3,64 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-interface DataPoint {
+interface ResData {
+    [key: number]: {
+      bottom: number[];
+      top: number[];
+    };
+  }
+  
+  interface DataPoint {
     x: number;
     y: number;
     value: number;
-}
-
-export const ShotPlot = ({
-    lData,
-    rData,
-    width,
-}: {
+  }
+  
+  export interface Data {
     lData: DataPoint[];
     rData: DataPoint[];
+  }
+  
+  function processResData(data: ResData): Data {
+    const pData = { lData: [], rData: [] };
+  
+    const cWidth = 43.9 / 2,
+      cHeight = 17,
+      cAlleyWidth = 1.4;
+    const scaleRX = (v) => Math.round(((v - cWidth) / cWidth) * 100);
+    const scaleLX = (v) => Math.round((v / cWidth) * 100);
+    const scaleY = (v) => Math.round(((v + cAlleyWidth) / cHeight) * 100);
+  
+    for (const d of Object.values(data)) {
+      if (d.bottom != null) {
+        const scaledLX = scaleLX(d.bottom[1]),
+          scaledLY = scaleY(d.bottom[0]);
+        if (scaledLX >= 0 && scaledLX <= 100 && scaledLY >= 0 && scaledLY <= 100)
+          pData.lData.push({
+            x: scaledLX,
+            y: scaledLY,
+            value: 1,
+          });
+      }
+      if (d.top != null) {
+        const scaledRX = scaleRX(d.top[1]),
+          scaledRY = scaleY(d.top[0]);
+        if (scaledRX >= 0 && scaledRX <= 100 && scaledRY >= 0 && scaledRY <= 100)
+          pData.rData.push({
+            x: scaledRX,
+            y: scaledRY,
+            value: 1,
+          });
+      }
+    }
+    return pData;
+  }
+
+export const ShotPlot = ({
+    data,
+    width,
+}: {
+    data: Data;
     width: number;
 }) => {
     const height = Math.round((350 / 612) * width); // Adjust height based on court aspect ratio
@@ -31,25 +76,26 @@ export const ShotPlot = ({
         return { left: adjustedX, top: adjustedY };
     };
 
-    const [data, setData] = useState({ lData: [], rData: [] });
+    // const [plotData, setPlotData] = useState({ lData: [], rData: [] });
 
-    useEffect(() => {
-        fetch("http://169.231.54.168:5001/fetch_player_position?video_id=test1")
-        .then((res) => {
-            if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            return res.json(); // Parse the response body as JSON
-        })
-        .then((resData) => {
-            console.log(resData); // Log the parsed response body
-            setData(processResData(resData));
-            // console.log(processResData(resData));
-        })
-        .catch((err) => {
-            console.error("Fetch error:", err);
-        });
-    }, []);
+    // useEffect(() => {
+    //     fetch("http://169.231.54.168:5001/fetch_birdie_end_pos?video_id=test1")
+    //     .then((res) => {
+    //         if (!res.ok) {
+    //         throw new Error(`HTTP error! status: ${res.status}`);
+    //         }
+    //         return res.json(); // Parse the response body as JSON
+    //     })
+    //     .then((resData) => {
+    //         console.log("hi");
+    //         console.log(resData); // Log the parsed response body
+    //         setPlotData(processResData(resData));
+    //         // console.log(processResData(resData));
+    //     })
+    //     .catch((err) => {
+    //         console.error("Fetch error:", err);
+    //     });
+    // }, []);
 
     return (
         <div
@@ -73,7 +119,7 @@ export const ShotPlot = ({
             />
 
             {/* Render red dots for lData */}
-            {lData.map((point, index) => {
+            {data.lData.map((point, index) => {
                 const { left, top } = mapCoordinates(point.x, point.y);
                 return (
                     <div
@@ -91,7 +137,7 @@ export const ShotPlot = ({
             })}
 
             {/* Render red dots for rData */}
-            {rData.map((point, index) => {
+            {data.rData.map((point, index) => {
                 const { left, top } = mapCoordinates(point.x+courtWidth, point.y);
                 return (
                     <div
