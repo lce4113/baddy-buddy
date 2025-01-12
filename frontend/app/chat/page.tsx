@@ -35,6 +35,12 @@ export default function ChatPage() {
       role: "assistant",
       content: `I've analyzed your previous games and can answer specific questions you have. For example: How many calories did I burn last game?`,
     },
+    {
+      role: "assistant",
+      content: `Previous Game Statistics
+      ![Image](/court.jpg)
+      ![Image](/court.jpg)`,
+    },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);

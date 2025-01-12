@@ -7,14 +7,6 @@ import LoadingOverlay from "./LoadingOverlay";
 import { processResData } from "./components/heatmap/processData";
 
 export default function Page() {
-  // const gameHistory = [
-  //   { id: 1, name: "Game 1", date: "Jan 9th, 2025" },
-  //   { id: 2, name: "Game 2", date: "Jan 10th, 2025" },
-  //   { id: 3, name: "Game 3", date: "Jan 11th, 2025" },
-  //   { id: 4, name: "Game 4", date: "Jan 12th, 2025" },
-  //   { id: 5, name: "Game 5", date: "Jan 13th, 2025" },
-  // ];
-
   const [status, setStatus] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [games, setGames] = useState<[]>([]);
@@ -111,8 +103,8 @@ export default function Page() {
   return (
     <div className="font-sans bg-gray-900 text-white min-h-screen p-5 relative pt-24">
       <LoadingOverlay isLoading={isLoading} />
-      <div className="text-center mb-10 flex flex-col space-y-2 px-16 items-center">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+      <div className="text-center mb-10 flex flex-col space-y-2 px-8 items-center">
+        <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent w-full">
           Baddy Buddy
         </h1>
         <p className="text-gray-400">Advanced Analytics for Badminton</p>

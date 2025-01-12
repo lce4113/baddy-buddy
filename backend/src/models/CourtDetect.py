@@ -31,7 +31,7 @@ class CourtDetect(object):
         self.normal_court_info = None
 
     def setup_RCNN(self):
-        self.__court_kpRCNN = torch.load('src/models/weights/court_kpRCNN.pth', map_location=torch.device('cpu'))
+        self.__court_kpRCNN = torch.load('src/models/weights/court_kpRCNN.pth', map_location=torch.device(self.device))
         self.__court_kpRCNN.to(self.device).eval()
 
     def del_RCNN(self):

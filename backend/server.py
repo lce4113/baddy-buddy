@@ -111,7 +111,7 @@ def fetch_player_position():
     # print(homography_result)
     return homography_result
 
-# Usage: /fetch_player_position?video_id=video_name
+# Usage: /fetch_birdie_end_pos?video_id=video_name
 @app.route("/fetch_birdie_end_pos", methods=["GET"])
 def fetch_biride_end_pos():
     video_id = request.args.get('video_id')
