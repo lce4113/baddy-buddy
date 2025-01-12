@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { CourtHeatmap } from "@/app/heatmap/Heatmap";
+import { CourtHeatmap } from "@/app/components/Heatmap/Heatmap";
 import Link from "next/link";
 
 function StatsPage() {
