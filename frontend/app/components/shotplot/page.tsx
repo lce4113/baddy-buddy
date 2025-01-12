@@ -1,25 +1,19 @@
-import {ShotPlot, Data} from "./Shotplot";
+import { ShotPlot } from "./Shotplot";
 
 export default function Home() {
-    const lData = [];
-    const rData = [];
-    for (let i = 0; i < 50; i++) {
-      lData.push({
-        x: Math.round(Math.random() * 100),
-        y: Math.round(Math.random() * 100),
-        value: Math.round(Math.random() * 10),
-      });
-      rData.push({
-        x: Math.round(Math.random() * 100),
-        y: Math.round(Math.random() * 100),
-        value: Math.round(Math.random() * 10),
-      });
-    }
-    const data = {lData, rData};
-    return (
-        <>
-            <div>shotplot page</div>
-            <ShotPlot data={data} width={300} />
-        </>
-    )
+  const data = [
+    [0, 0],
+    [1, 0],
+    [17, 43.9],
+  ];
+  // for (let i = 0; i < 50; i++) {
+  //   data.push([Math.round(Math.random() * 17), Math.round(Math.random() * 44)]);
+  // }
+  console.log("pdata:", data);
+  return (
+    <div>
+      <div>shotplot page</div>
+      <ShotPlot data={data} width={300} />
+    </div>
+  );
 }

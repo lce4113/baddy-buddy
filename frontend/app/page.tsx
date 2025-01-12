@@ -1,23 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import LoadingOverlay from "./LoadingOverlay";
 import { processResData } from "./components/heatmap/processData";
 
 export default function Page() {
-  const gameHistory = [
-    { id: 1, name: "Game 1", date: "Jan 9th, 2025" },
-    { id: 2, name: "Game 2", date: "Jan 10th, 2025" },
-    { id: 3, name: "Game 3", date: "Jan 11th, 2025" },
-    { id: 4, name: "Game 4", date: "Jan 12th, 2025" },
-    { id: 5, name: "Game 5", date: "Jan 13th, 2025" },
-  ];
+  // const gameHistory = [
+  //   { id: 1, name: "Game 1", date: "Jan 9th, 2025" },
+  //   { id: 2, name: "Game 2", date: "Jan 10th, 2025" },
+  //   { id: 3, name: "Game 3", date: "Jan 11th, 2025" },
+  //   { id: 4, name: "Game 4", date: "Jan 12th, 2025" },
+  //   { id: 5, name: "Game 5", date: "Jan 13th, 2025" },
+  // ];
 
   const [status, setStatus] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [games, setGames] = useState<[]>([]);
+
+  useEffect(() => {
+    setGames(JSON.parse(localStorage.getItem("games")));
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -37,7 +41,7 @@ export default function Page() {
     formData.append("video", file);
 
     try {
-      const PORT = "http://169.231.212.56:5001";
+      const PORT = "http://169.231.212.56:5001/";
       const response = await fetch(PORT + "/upload", {
         method: "POST",
         body: formData,
@@ -61,21 +65,21 @@ export default function Page() {
         const playerDataJson = processResData(await playerData.json());
         console.log(playerDataJson);
 
-        // const shotData = await fetch(
-        //   PORT + "/fetch_birdie_end_pos?video_id=" + name,
-        //   {
-        //     method: "GET",
-        //   }
-        // );
+        const shotData = await fetch(
+          PORT + "/fetch_birdie_end_pos?video_id=" + name,
+          {
+            method: "GET",
+          }
+        );
 
-        // const shotDataJson = await shotData.json();
-        // console.log(shotDataJson);
+        const shotDataJson = await shotData.json();
+        console.log("shotData:", shotDataJson);
 
         if (localStorage.getItem("games") === null) {
           localStorage.setItem("games", JSON.stringify([]));
         }
         const curArr = JSON.parse(localStorage.getItem("games") as string);
-        const newArr = [...curArr, { playerDataJson }];
+        const newArr = [...curArr, { playerDataJson, date: "Jan 12th, 2025" }];
         setGames(newArr);
         localStorage.setItem("games", JSON.stringify(newArr));
         // if (!data.ok) {
@@ -147,13 +151,13 @@ export default function Page() {
       <section className="text-center">
         <h2 className="text-2xl mb-5">Game History</h2>
         <ul className="list-none p-0">
-          {gameHistory.map((game) => (
+          {games.map((game, i) => (
             <li
-              key={game.id}
+              key={i + 1}
               className="bg-gray-800 p-4 mb-3 rounded cursor-pointer hover:bg-gray-700 w-11/12 max-w-lg mx-auto"
             >
-              <a href={`/stats/${game.id}`} className="block text-gray-300">
-                {game.name} - {game.date}
+              <a href={`/stats/${i + 1}`} className="block text-gray-300">
+                {`Game ${i + 1}`} - {game.date}
               </a>
             </li>
           ))}

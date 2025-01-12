@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import h337 from "heatmap.js";
 import Image from "next/image";
-import { DataPoint } from "../page";
+import { Data, Point } from "./processData";
 
 export const CourtHeatmap = ({
   data,
@@ -67,7 +67,7 @@ const Heatmap = ({
   left,
   top,
 }: {
-  data: DataPoint[];
+  data: Point[];
   radius: number;
   width: number;
   height: number;
@@ -76,10 +76,10 @@ const Heatmap = ({
 }) => {
   const heatmapContainer = useRef(null); // Reference to the heatmap container
 
-  data = data.map(({ x, y, value }) => ({
+  data = data.map(({ x, y }) => ({
     x: Math.round((x / 100) * width),
     y: Math.round((y / 100) * height),
-    value,
+    value: 1,
   }));
 
   useEffect(() => {
@@ -89,8 +89,8 @@ const Heatmap = ({
       radius, // Adjust radius for the heatmap points
     });
 
-    // const max = Math.max(...data.map((o) => o.value));
-    const max = 10;
+    // const max = 5 * Math.max(...data.map((o) => o.value));
+    const max = 5;
 
     // Add data to the heatmap
     heatmapInstance.setData({ max, data });
