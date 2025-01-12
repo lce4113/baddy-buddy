@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
+import LoadingOverlay from "./LoadingOverlay";
 
 export default function Page() {
   const gameHistory = [
@@ -14,16 +14,17 @@ export default function Page() {
     { id: 5, name: "Game 5", date: "Jan 13th, 2025" },
   ];
 
-  const [file, setFile] = useState<File | null>(null);
   const [status, setStatus] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFile(e.target.files[0]);
+      setIsLoading(true);
+      handleUpload(e.target.files[0]);
     }
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (file: File) => {
     if (!file) {
       setStatus("Please select a file.");
       return;
@@ -33,7 +34,7 @@ export default function Page() {
     formData.append("video", file);
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/upload", {
+      const response = await fetch("http://127.0.0.1:5001/upload", {
         method: "POST",
         body: formData,
       });
@@ -76,14 +77,17 @@ export default function Page() {
 
         setStatus(`Error: ${result.error}`);
       }
+      setIsLoading(false);
     } catch (e) {
       setStatus("Upload failed. Please try again.");
+      setIsLoading(false);
       console.log(e);
     }
   };
 
   return (
     <div className="font-sans bg-gray-900 text-white min-h-screen p-5 relative">
+      <LoadingOverlay isLoading={isLoading} />
       <header className="text-center mb-10">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
           Baddy Buddy
@@ -98,20 +102,19 @@ export default function Page() {
         />
         <label
           htmlFor="fileInput"
-          className="mt-5 inline-block px-4 py-2 text-lg font-bold text-white bg-black rounded cursor-pointer hover:bg-gray-800"
+          className="mt-5 inline-block px-6 py-3 text-lg font-bold text-white bg-black rounded cursor-pointer hover:bg-gray-800"
         >
           UPLOAD NEW GAME <span className="ml-2">📤</span>
         </label>
-        <button
-          onClick={handleUpload}
-          className={`mt-2 px-4 py-2 text-lg font-bold text-white bg-purple-500 rounded hover:bg-purple-600 ${
-            !file ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          disabled={!file}
-        >
-          Upload
-        </button>
-        {status && <p className="mt-3 text-gray-400">{status}</p>}
+        {status != null && (
+          <p
+            className={`mt-3 ${
+              status.includes("Error") ? "text-red-500" : "text-green-500"
+            }`}
+          >
+            {status}
+          </p>
+        )}
       </header>
 
       <section className="text-center">
@@ -134,14 +137,14 @@ export default function Page() {
       <Link
         href="/chat"
         passHref
-        className="fixed bottom-5 right-5 w-20 h-20 object-contain max-w-xs transition duration-300 ease-in-out hover:animate-wiggle"
+        className="fixed bottom-5 right-4 w-24 h-24 object-contain transition duration-300 ease-in-out hover:animate-wiggle"
       >
         <Image
           src="/birdie-baddie.png"
           alt="Decorative Graphic"
           className=""
-          layout="fill" // required
-          objectFit="cover" // change to suit your needs
+          layout="fill"
+          objectFit="cover"
         />
       </Link>
     </div>
