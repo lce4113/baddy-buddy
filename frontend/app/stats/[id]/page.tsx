@@ -60,6 +60,26 @@ function StatsPage() {
           <ShotPlot data={shotplotData} width={windowWidth * 0.8} />
         </section>
 
+        {/* Movement Tracking Section */}
+        <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto">
+          <h2 className="text-2xl font-semibold mb-4">Movement Tracking</h2>
+          <p className="text-gray-400 mb-4">Observe your movement patterns.</p>
+          <CourtHeatmap
+            data={heatmapData}
+            radius={10}
+            width={windowWidth * 0.8}
+          />
+        </section>
+
+        {/* Distance Tracking Section */}
+        <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto flex flex-col">
+          <h2 className="text-2xl font-semibold mb-4">Distance Tracking</h2>
+          <p className="text-gray-400 mb-4">
+            See how many calories you burned.
+          </p>
+          <PlayerDistance data={heatmapData} />
+        </section>
+
         {/* Point Differential Section */}
         <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto">
           <h2 className="text-2xl font-semibold mb-4">Point Differential</h2>
@@ -84,26 +104,6 @@ function StatsPage() {
               [Shot Classifier Visualization Placeholder]
             </span>
           </div>
-        </section>
-
-        {/* Movement Tracking Section */}
-        <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto">
-          <h2 className="text-2xl font-semibold mb-4">Movement Tracking</h2>
-          <p className="text-gray-400 mb-4">Observe your movement patterns.</p>
-          <CourtHeatmap
-            data={heatmapData}
-            radius={10}
-            width={windowWidth * 0.8}
-          />
-        </section>
-
-        {/* Distance Tracking Section */}
-        <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto flex flex-col">
-          <h2 className="text-2xl font-semibold mb-4">Distance Tracking</h2>
-          <p className="text-gray-400 mb-4">
-            See how many calories you burned.
-          </p>
-          <PlayerDistance data={heatmapData} />
         </section>
 
         <img
