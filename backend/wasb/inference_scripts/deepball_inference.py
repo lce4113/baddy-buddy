@@ -53,7 +53,7 @@ def run_inference(weights, input_path, overlay=False):
 
     # Load the model and weights
     model = DeepBall(n_channels=3, n_classes=config['class_out']).to(device)
-    checkpoint = torch.load(config['model_path'], map_location=device)
+    checkpoint = torch.load(config['model_path'], map_location=torch.device('cpu'))
     model.load_state_dict(checkpoint['model_state_dict'], strict=True)
     model.eval()  # Set model to evaluation mode
 

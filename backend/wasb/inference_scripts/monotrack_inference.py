@@ -56,7 +56,7 @@ def run_inference(weights, input_path, overlay=False):
     model = MonoTrack(n_channels=9, n_classes=3, 
                     bilinear=config['bilinear'], 
                     halve_channel=config['halve_channel']).to(device)
-    checkpoint = torch.load(config['model_path'], map_location=device)
+    checkpoint = torch.load(config['model_path'], map_location=torch.device('cpu'))
     model.load_state_dict(checkpoint['model_state_dict'], strict=True)
     model.eval()  # Set model to evaluation mode
 

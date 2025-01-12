@@ -68,7 +68,7 @@ def run_inference(weights, input_path, overlay=False):
                         out_mid_channels=config['out_mid_channels'],
                         blocks=config['blocks'],
                         channels=config['channels']).to(device)
-    checkpoint = torch.load(config['model_path'], map_location=device)
+    checkpoint = torch.load(config['model_path'], map_location=torch.device('cpu'))
     model.load_state_dict(checkpoint['model_state_dict'], strict=True)
     model.eval()  # Set model to evaluation mode
 

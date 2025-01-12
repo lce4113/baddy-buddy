@@ -263,7 +263,7 @@ def resnet50_v1s(pretrained=False, root='~/.torch/models', in_channels=3, dilate
     if pretrained:
         raise ValueError('pretrained=True not supported (2022.8.16)')
         from ..model_store import get_resnet_file
-        model.load_state_dict(torch.load(get_resnet_file('resnet50', root=root)), strict=False)
+        model.load_state_dict(torch.load(get_resnet_file('resnet50', root=root),map_location=torch.device('cpu')), strict=False)
     return model
 
 
@@ -272,7 +272,7 @@ def resnet101_v1s(pretrained=False, root='~/.torch/models', in_channels=3, dilat
     if pretrained:
         raise ValueError('pretrained=True not supported (2022.8.16)')
         from ..model_store import get_resnet_file
-        model.load_state_dict(torch.load(get_resnet_file('resnet101', root=root)), strict=False)
+        model.load_state_dict(torch.load(get_resnet_file('resnet101', root=root), map_location=torch.device('cpu')), strict=False)
     return model
 
 
@@ -281,7 +281,7 @@ def resnet152_v1s(pretrained=False, root='~/.torch/models', in_channels=3, dilat
     if pretrained:
         raise ValueError('pretrained=True not supported (2022.8.16)')
         from ..model_store import get_resnet_file
-        model.load_state_dict(torch.load(get_resnet_file('resnet152', root=root)), strict=False)
+        model.load_state_dict(torch.load(get_resnet_file('resnet152', root=root),map_location=torch.device('cpu')), strict=False)
     return model
 
 

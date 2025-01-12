@@ -48,7 +48,7 @@ def run_inference(weights, input_path, overlay=False):
 
     # Load the model and weights
     model = BallSeg(nclass=1, backbone=config['backbone'], in_channels=6 if config['rgb_diff'] else 3, scale_factors=config['scale_factors']).to(device)
-    checkpoint = torch.load(config['model_path'], map_location=device)
+    checkpoint = torch.load(config['model_path'], map_location=torch.device('cpu'))
     model.load_state_dict(checkpoint['model_state_dict'], strict=True)
     model.eval()  # Set model to evaluation mode
 

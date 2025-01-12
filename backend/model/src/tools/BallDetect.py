@@ -55,9 +55,10 @@ def ball_detect(video_path,result_path):
 
     orivi_name, start_frame = extract_numbers(video_name)
 
-    cd_save_dir= os.path.join(f"{result_path}/courts", f"court_kp")
-    cd_json_path=f"{cd_save_dir}/{orivi_name}.json"
-    court=read_json(cd_json_path)['court_info']            
+    # cd_save_dir= os.path.join(f"{result_path}/courts", f"court_kp")
+    # print(cd_save_dir)
+    # cd_json_path=f"{cd_save_dir}/{orivi_name}.json"
+    # court=read_json(cd_json_path)['court_info']            
             
 
     d_save_dir = os.path.join(result_path, f"loca_info/{orivi_name}")
@@ -68,7 +69,7 @@ def ball_detect(video_path,result_path):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     model = TrackNet().to(device)
-    model.load_state_dict(torch.load("src/models/weights/ball_track.pt"))
+    model.load_state_dict(torch.load("src/models/weights/ball_track.pt", map_location=torch.device('cpu')))
     model.eval()
 
     vid_cap = cv2.VideoCapture(f_source)
@@ -199,7 +200,7 @@ def ball_detect(video_path,result_path):
     try:
         # Code block that may raise exceptions
         json_path = f"{d_save_dir}/{video_name}.json"
-        smooth(json_path, court,dd_save_dir)
+        #smooth(json_path, court,dd_save_dir)
     except KeyboardInterrupt:
         print("Caught exception type on main.py ball_detect:",
                 type(KeyboardInterrupt).__name__)

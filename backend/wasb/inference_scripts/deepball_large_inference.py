@@ -58,7 +58,7 @@ def run_inference(weights, input_path, overlay=False):
                     first_conv_kernel_size=config['first_conv_kernel_size'], 
                     first_conv_stride=config['first_conv_stride'], 
                     last_conv_kernel_size=config['last_conv_kernel_size']).to(device)
-    checkpoint = torch.load(config['model_path'], map_location=device)
+    checkpoint = torch.load(config['model_path'], map_location=torch.device('cpu'))
     model.load_state_dict(checkpoint['model_state_dict'], strict=True)
     model.eval()  # Set model to evaluation mode
 

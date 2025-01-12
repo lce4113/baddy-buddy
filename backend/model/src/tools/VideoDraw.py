@@ -92,7 +92,7 @@ for root, dirs, files in os.walk(folder_path):
             # read ball location
             ball_dict = {}
             for res_root, res_dirs, res_files in os.walk(
-                    f"{result_path}/ball/loca_info(denoise)/{video_name}"):
+                    f"{result_path}/ball/loca_info/{video_name}"):
                 for res_file in res_files:
                     print(res_root)
                     _, ext = os.path.splitext(res_file)
