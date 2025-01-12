@@ -31,12 +31,17 @@ const PlayerDistance = ({ data }: { data: any }) => {
   }, [data]);
 
   return (
-    <div>
-      <div className="bg-gray-700">
-        <div>Distance</div>
-        <div>{totalDistance.toFixed(2)}</div>
+    <div className="w-full">
+      <div className="flex space-x-4 w-full text-lg">
+        <div className="bg-gray-700 rounded-lg p-6">
+          <div className="font-bold">Distance</div>
+          <div>{totalDistance.toFixed(2)} ft</div>
+        </div>
+        <div className="bg-gray-700 rounded-lg p-6">
+          <div className="font-bold">Calories</div>
+          <div>{(totalDistance * 0.06).toFixed(2)} Cal</div>
+        </div>
       </div>
-      <p>Total Distance: {totalDistance.toFixed(2)} feet</p>
     </div>
   );
 };

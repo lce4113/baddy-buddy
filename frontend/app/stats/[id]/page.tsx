@@ -98,16 +98,12 @@ function StatsPage() {
         </section>
 
         {/* Distance Tracking Section */}
-        <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto">
+        <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto flex flex-col">
           <h2 className="text-2xl font-semibold mb-4">Distance Tracking</h2>
           <p className="text-gray-400 mb-4">
             See how many calories you burned.
           </p>
-          <PlayerDistance
-            data={heatmapData}
-            radius={10}
-            width={windowWidth * 0.8}
-          />
+          <PlayerDistance data={heatmapData} />
         </section>
 
         <img
