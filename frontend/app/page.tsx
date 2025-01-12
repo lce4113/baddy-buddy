@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import LoadingOverlay from "./LoadingOverlay";
-
+import { processResData } from "./components/heatmap/processData";
 
 export default function Page() {
   const gameHistory = [
@@ -37,39 +37,47 @@ export default function Page() {
     formData.append("video", file);
 
     try {
-
-      const response = await fetch("http://127.0.0.1:5001/upload", {
+      const PORT = "http://169.231.212.56:5001";
+      const response = await fetch(PORT + "/upload", {
         method: "POST",
         body: formData,
       });
       const result = await response.json();
-      console.log(result)
+      console.log(result);
       if (response.ok) {
         setStatus(`Upload successful: ${result.message}`);
 
         console.log(file);
-        console.log(file.name.split('.')[0])
-        let name = file.name.split('.')[0]
-        console.log("http://127.0.0.1:5001/fetch_player_position?video_id=" + name)
-        const playerData = await fetch("http://127.0.0.1:5001/fetch_player_position?video_id=" + name, {
-          method: "GET",
-        })
+        console.log(file.name.split(".")[0]);
+        const name = file.name.split(".")[0];
+        console.log(PORT + "/fetch_player_position?video_id=" + name);
+        const playerData = await fetch(
+          PORT + "/fetch_player_position?video_id=" + name,
+          {
+            method: "GET",
+          }
+        );
 
-        let playerDataJson = await playerData.json();
+        const playerDataJson = processResData(await playerData.json());
         console.log(playerDataJson);
 
-        const shotData = await fetch("http://127.0.0.1:5001/fetch_birdie_end_pos?video_id=" + name, {
-          method: "GET",
-        })
+        // const shotData = await fetch(
+        //   PORT + "/fetch_birdie_end_pos?video_id=" + name,
+        //   {
+        //     method: "GET",
+        //   }
+        // );
 
-        let shotDataJson = await shotData.json();
-        console.log(shotDataJson);
+        // const shotDataJson = await shotData.json();
+        // console.log(shotDataJson);
 
-        const curArr = JSON.parse(localStorage.getItem('data') as string);
-        // {}
-
-        setGames([...curArr, {playerDataJson,shotDataJson}]);
-        localStorage.setItem('data', JSON.stringify(dataJson));
+        if (localStorage.getItem("games") === null) {
+          localStorage.setItem("games", JSON.stringify([]));
+        }
+        const curArr = JSON.parse(localStorage.getItem("games") as string);
+        const newArr = [...curArr, { playerDataJson }];
+        setGames(newArr);
+        localStorage.setItem("games", JSON.stringify(newArr));
         // if (!data.ok) {
         //     throw new Error(`HTTP error! status: ${res.status}`);
         //   }

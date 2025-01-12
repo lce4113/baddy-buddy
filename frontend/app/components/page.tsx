@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CourtHeatmap } from "./Heatmap/Heatmap";
-import { processResData } from "./Heatmap/processData";
+import { CourtHeatmap } from "./heatmap/Heatmap";
+import { processResData } from "./heatmap/processData";
 
 export default function Home() {
   // rng points
