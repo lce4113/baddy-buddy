@@ -1,11 +1,23 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { CourtHeatmap } from "@/app/components/heatmap/Heatmap";
+import { ShotPlot } from "@/app/components/shotplot/Shotplot";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import { CourtHeatmap } from "@/app/heatmap/Heatmap";
 import { ShotPlot } from "@/app/shotplot/Shotplot";
 import Link from "next/link";
 
 function StatsPage() {
+  const [heatmapData, setHeatmapData] = useState<string | null>({
+    lData: [],
+    rData: [],
+  });
+  const [shotplotData, setShotplotData] = useState<string | null>({
+    lData: [],
+    rData: [],
+  });
   const [heatmapData, setHeatmapData] = useState<string | null>({
     lData: [],
     rData: [],
@@ -51,6 +63,9 @@ function StatsPage() {
           <p className="text-gray-400 mb-4">
             Visualize where you lost your points during the game.
           </p>
+          <p className="text-gray-400 mb-4">
+            Visualize where you lost your points during the game.
+          </p>
           <ShotPlot data={shotplotData} width={window.innerWidth * 0.8} />
         </section>
 
@@ -84,6 +99,11 @@ function StatsPage() {
         <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto">
           <h2 className="text-2xl font-semibold mb-4">Movement Tracking</h2>
           <p className="text-gray-400 mb-4">Observe your movement patterns.</p>
+          <CourtHeatmap
+            data={heatmapData}
+            radius={10}
+            width={window.innerWidth * 0.8}
+          />
           <CourtHeatmap
             data={heatmapData}
             radius={10}

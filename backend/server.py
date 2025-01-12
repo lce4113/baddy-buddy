@@ -29,7 +29,7 @@ def run_video_processing():
     log_file = "video_processing.log"
     with open(log_file, "a") as log:
         try:
-            print("should")
+            # print("should")
             log.write("Starting video processing...\n")
             subprocess.run(command, check=True)
             log.write("Video processing completed successfully.\n")
@@ -38,7 +38,7 @@ def run_video_processing():
 
 @app.route('/upload', methods=['POST'])
 def upload_video():
-    print("in")
+    # print("in")
     if 'video' not in request.files:
         return jsonify({'error': 'No video file part'}), 400
     
@@ -64,12 +64,12 @@ def fetch_games():
 def fetch_player_position():
     # Get cached res data
     video_id = request.args.get('video_id')
-    print(video_id)
+    # print(video_id)
     if not video_id:
         return jsonify({"error": "video_id is required"}), 400
     
     player_data = fetch_player_result(video_id=video_id)
-    print(player_data)
+    # print(player_data)
     court_data = fetch_court_result(video_id=video_id)
     court_homography = CourtHomography(court_data["court_info"])
 
@@ -84,7 +84,7 @@ def fetch_player_position():
     # Process the average foot pos in each frame
     averages = {}
     for frame_index, frame_data in player_data.items():
-        print(frame_index)
+        # print(frame_index)
         top_points = frame_data.get("top", [])
         bottom_points = frame_data.get("bottom", [])
         
@@ -108,7 +108,7 @@ def fetch_player_position():
             "top": top_homography,
             "bottom": bottom_homography
         }
-    print(homography_result)
+    # print(homography_result)
     return homography_result
 
 # Usage: /fetch_player_position?video_id=video_name
