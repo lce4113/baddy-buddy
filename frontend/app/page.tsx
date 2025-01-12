@@ -66,10 +66,10 @@ export default function Page() {
         console.log(shotDataJson);
 
         const curArr = JSON.parse(localStorage.getItem('data') as string);
-        // {}
+        // [..]
 
-        setGames([...curArr, {playerDataJson,shotDataJson}]);
-        localStorage.setItem('data', JSON.stringify(dataJson));
+        setGames([...curArr , {playerDataJson,shotDataJson}]);
+        localStorage.setItem('data', JSON.stringify(games));
         // if (!data.ok) {
         //     throw new Error(`HTTP error! status: ${res.status}`);
         //   }
