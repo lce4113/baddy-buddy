@@ -19,3 +19,16 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.markdown > * {
+  all: revert;
+  padding: 0px;
+  margin: 0px;
+  margin-top: 0px;
+  line-height: unset;
+  border: 0px;
+  margin: 0px;
+}
+.markdown p {
+  margin: 0px;
+}
