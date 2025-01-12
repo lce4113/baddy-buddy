@@ -72,7 +72,7 @@ Suggest drills, exercises, and in-game tactics based on observed data trends and
         >
           ◀ Back
         </Link>
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+        <h1 className="mt-24 text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
           {`Game ${ID} Stats`}
         </h1>
         <p className="text-gray-400">In-depth Analytics for Your Game</p>
@@ -103,6 +103,14 @@ Suggest drills, exercises, and in-game tactics based on observed data trends and
           <h2 onClick={analyzeGame} className="text-2xl font-semibold mb-4">Baddie Birdie AI Analysis</h2>
           {loading && <p>Loading...</p>}
           {response && <div>{response}</div>}
+        </section>
+        {/* Distance Tracking Section */}
+        <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto flex flex-col">
+          <h2 className="text-2xl font-semibold mb-4">Distance Tracking</h2>
+          <p className="text-gray-400 mb-4">
+            See how many calories you burned.
+          </p>
+          <PlayerDistance data={heatmapData} />
         </section>
 
         <img
