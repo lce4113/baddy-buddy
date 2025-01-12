@@ -38,11 +38,42 @@ export default function Page() {
         method: "POST",
         body: formData,
       });
-
       const result = await response.json();
+
       if (response.ok) {
-        setStatus(`Upload successful!`);
+        setStatus(`Upload successful: ${result.message}`);
+
+        console.log(file);
+        console.log(file.name.split('.')[0])
+        let name = file.name.split('.')[0]
+        console.log("http://127.0.0.1:5000/fetch_player_position?video_id=" + name)
+        const data = await fetch("http://127.0.0.1:5000/fetch_player_position?video_id=" + name, {
+          method: "GET",
+        })
+        let dataJson = await data.json();
+        console.log(dataJson);
+        // if (!data.ok) {
+        //     throw new Error(`HTTP error! status: ${res.status}`);
+        //   }
+        //   return res.json(); // Parse the response body as JSON
+        // }
+       
+        // // console.log(resData); // Log the parsed response body
+        // const newData = processResData(resData);
+        // setData(newData);
+        // // console.log(newData.rData);
+        // // console.log("^ rData");
+        // // console.log(processResData(resData));
+        // console.log(newData);
+
+
+        // console.error("Fetch error:", err);
+
+
+
+
       } else {
+
         setStatus(`Error: ${result.error}`);
       }
       setIsLoading(false);

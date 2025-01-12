@@ -2,3 +2,4 @@ videos/
 src/models/weights
 ShuttleSet
 .venv
+__pycache__/
