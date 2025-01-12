@@ -1,21 +1,28 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
+import { processShotplotData, ResData } from "./processData";
 
-export const ShotPlot = ({ data, width }: { data: Data; width: number }) => {
+export const ShotPlot = ({ data, width }: { data: ResData; width: number }) => {
   const height = Math.round((350 / 612) * width); // Adjust height based on court aspect ratio
-  const x_margin = 26.5;
-  const y_margin = 21.5;
-  const courtWidth = width / 2 - x_margin; // Half court width minus margin
-  const courtHeight = height - 2 * y_margin;
+  const x_margin = 10;
+  const y_margin = 10;
+  // const courtWidth = width - 2 * x_margin; // Half court width minus margin
+  // const courtHeight = height - 2 * y_margin;
 
-  // Function to map data coordinates to the court's dimensions
-  const mapCoordinates = (x: number, y: number) => {
-    const adjustedX = x_margin + (x / 100) * courtWidth;
-    const adjustedY = y_margin + (y / 100) * courtHeight;
-    return { left: adjustedX, top: adjustedY };
-  };
+  console.log("data:", processShotplotData(data));
+  console.log("width:", width);
+  console.log("height:", height);
+  data = processShotplotData(data).map(({ x, y }) => ({
+    x: Math.round(
+      (((x / 100) * (100 - 2 * x_margin) + x_margin) * width) / 100
+    ),
+    y: Math.round(
+      (((y / 100) * (100 - 2 * y_margin) + y_margin) * height) / 100
+    ),
+  }));
+  console.log("scaled data:", data);
 
   // const [plotData, setPlotData] = useState({ lData: [], rData: [] });
 
@@ -59,41 +66,19 @@ export const ShotPlot = ({ data, width }: { data: Data; width: number }) => {
         }}
       />
 
-      {/* Render red dots for lData */}
-      {data.lData.map((point, index) => {
-        const { left, top } = mapCoordinates(point.x, point.y);
-        return (
-          <div
-            key={`lData-${index}`}
-            className="absolute bg-red-500 rounded-full"
-            style={{
-              width: "8px", // Dot size
-              height: "8px",
-              left: `${left}px`,
-              top: `${top}px`,
-              transform: "translate(-50%, -50%)",
-            }}
-          ></div>
-        );
-      })}
-
-      {/* Render red dots for rData */}
-      {data.rData.map((point, index) => {
-        const { left, top } = mapCoordinates(point.x + courtWidth, point.y);
-        return (
-          <div
-            key={`rData-${index}`}
-            className="absolute bg-red-500 rounded-full"
-            style={{
-              width: "8px", // Dot size
-              height: "8px",
-              left: `${left}px`,
-              top: `${top}px`,
-              transform: "translate(-50%, -50%)",
-            }}
-          ></div>
-        );
-      })}
+      {data.map((point, index) => (
+        <div
+          key={`lData-${index}`}
+          className="absolute bg-red-500 rounded-full"
+          style={{
+            width: "8px", // Dot size
+            height: "8px",
+            transform: "translate(-50%, -50%)",
+            left: `${point.x}px`,
+            top: `${point.y}px`,
+          }}
+        ></div>
+      ))}
     </div>
   );
 };

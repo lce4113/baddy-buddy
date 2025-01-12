@@ -4,37 +4,31 @@ import React, { useEffect, useState } from "react";
 import { CourtHeatmap } from "@/app/components/heatmap/Heatmap";
 import { ShotPlot } from "@/app/components/shotplot/Shotplot";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { CourtHeatmap } from "@/app/heatmap/Heatmap";
-import { ShotPlot } from "@/app/shotplot/Shotplot";
-import Link from "next/link";
+import PlayerDistance from "@/app/components/distance/Distance";
 
 function StatsPage() {
-  const [heatmapData, setHeatmapData] = useState<string | null>({
+  const [heatmapData, setHeatmapData] = useState<any>({
     lData: [],
     rData: [],
   });
-  const [shotplotData, setShotplotData] = useState<string | null>({
-    lData: [],
-    rData: [],
-  });
-  const [heatmapData, setHeatmapData] = useState<string | null>({
-    lData: [],
-    rData: [],
-  });
-  const [shotplotData, setShotplotData] = useState<string | null>({
-    lData: [],
-    rData: [],
-  });
+  const [shotplotData, setShotplotData] = useState<string | null>([]);
+
+  const [ID, setID] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(100);
 
   useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    const ID = window.location.href.split("/").slice(-1)[0];
+    setID(ID);
     console.log("test");
-    const hData = JSON.parse(localStorage.getItem("heatmap_data"));
+    const hData = JSON.parse(localStorage.getItem("games"))[ID - 1]
+      .playerDataJson;
     if (hData) {
       setHeatmapData(hData);
     }
     console.log(hData);
-    const sData = JSON.parse(localStorage.getItem("shotplot_data"));
+    const sData = JSON.parse(localStorage.getItem("games"))[ID - 1]
+      .shotPlotJson;
     if (sData) {
       setShotplotData(sData);
     }
@@ -50,8 +44,8 @@ function StatsPage() {
         >
           ◀ Back
         </Link>
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
-          Game Stats
+        <h1 className="mt-24 text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+          {`Game ${ID} Stats`}
         </h1>
         <p className="text-gray-400">In-depth Analytics for Your Game</p>
       </header>
@@ -63,10 +57,7 @@ function StatsPage() {
           <p className="text-gray-400 mb-4">
             Visualize where you lost your points during the game.
           </p>
-          <p className="text-gray-400 mb-4">
-            Visualize where you lost your points during the game.
-          </p>
-          <ShotPlot data={shotplotData} width={window.innerWidth * 0.8} />
+          <ShotPlot data={shotplotData} width={windowWidth * 0.8} />
         </section>
 
         {/* Point Differential Section */}
@@ -102,13 +93,17 @@ function StatsPage() {
           <CourtHeatmap
             data={heatmapData}
             radius={10}
-            width={window.innerWidth * 0.8}
+            width={windowWidth * 0.8}
           />
-          <CourtHeatmap
-            data={heatmapData}
-            radius={10}
-            width={window.innerWidth * 0.8}
-          />
+        </section>
+
+        {/* Distance Tracking Section */}
+        <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto flex flex-col">
+          <h2 className="text-2xl font-semibold mb-4">Distance Tracking</h2>
+          <p className="text-gray-400 mb-4">
+            See how many calories you burned.
+          </p>
+          <PlayerDistance data={heatmapData} />
         </section>
 
         <img

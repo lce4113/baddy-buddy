@@ -25,7 +25,9 @@ export default function Home() {
   const [data, setData] = useState({ lData: [], rData: [] });
 
   useEffect(() => {
-    fetch("http://169.231.54.168:5001/fetch_player_position?video_id=test1")
+    fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}fetch_player_position?video_id=test1`
+    )
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);

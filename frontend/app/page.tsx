@@ -1,26 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import LoadingOverlay from "./LoadingOverlay";
 import { processResData } from "./components/heatmap/processData";
 
 export default function Page() {
-  const gameHistory = [
-    { id: 1, name: "Game 1", date: "Jan 9th, 2025" },
-    { id: 2, name: "Game 2", date: "Jan 10th, 2025" },
-    { id: 3, name: "Game 3", date: "Jan 11th, 2025" },
-    { id: 4, name: "Game 4", date: "Jan 12th, 2025" },
-    { id: 5, name: "Game 5", date: "Jan 13th, 2025" },
-    { id: 6, name: "Game 6", date: "Jan 17th, 2025" },
-    { id: 7, name: "Game 7", date: "Jan 18th, 2025" },
-    { id: 8, name: "Game 8", date: "Jan 25th, 2025" },
-  ];
-
   const [status, setStatus] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [games, setGames] = useState<[]>([]);
+
+  useEffect(() => {
+    setGames(JSON.parse(localStorage.getItem("games") as string));
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -40,7 +33,7 @@ export default function Page() {
     formData.append("video", file);
 
     try {
-      const PORT = "http://169.231.212.56:5001";
+      const PORT = process.env.NEXT_PUBLIC_SERVER_URL;
       const response = await fetch(PORT + "/upload", {
         method: "POST",
         body: formData,
@@ -64,21 +57,21 @@ export default function Page() {
         const playerDataJson = processResData(await playerData.json());
         console.log(playerDataJson);
 
-        // const shotData = await fetch(
-        //   PORT + "/fetch_birdie_end_pos?video_id=" + name,
-        //   {
-        //     method: "GET",
-        //   }
-        // );
+        const shotData = await fetch(
+          PORT + "/fetch_birdie_end_pos?video_id=" + name,
+          {
+            method: "GET",
+          }
+        );
 
-        // const shotDataJson = await shotData.json();
-        // console.log(shotDataJson);
+        const shotDataJson = await shotData.json();
+        console.log("shotData:", shotDataJson);
 
         if (localStorage.getItem("games") === null) {
           localStorage.setItem("games", JSON.stringify([]));
         }
         const curArr = JSON.parse(localStorage.getItem("games") as string);
-        const newArr = [...curArr, { playerDataJson }];
+        const newArr = [...curArr, { playerDataJson, date: "Jan 12th, 2025" }];
         setGames(newArr);
         localStorage.setItem("games", JSON.stringify(newArr));
         // if (!data.ok) {
@@ -111,9 +104,10 @@ export default function Page() {
     <div className="font-sans bg-gray-900 text-white min-h-screen p-5 relative pt-24">
       <LoadingOverlay isLoading={isLoading} />
       <div className="text-center mb-10 flex flex-col space-y-2 px-8 items-center">
-        <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent w-full">
+        <h1 className="text-5xl p-1 font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent w-full bg-[length:200%_200%] animate-gradient">
           Baddy Buddy
         </h1>
+
         <p className="text-gray-400">Advanced Analytics for Badminton</p>
         <div className="py-8">
           <input
@@ -133,7 +127,7 @@ export default function Page() {
             {status != null && (
               <p
                 className={`mt-3 ${
-                  status.includes("Error") ? "text-red-500" : "text-green-500"
+                  status.includes("failed") ? "text-red-500" : "text-green-500"
                 }`}
               >
                 {status}
@@ -141,29 +135,29 @@ export default function Page() {
             )}
           </div>
           <div className="h-2" />
-          <Link href="/chat" className="text-gray-400 hover:underline">
+          <Link href="/chat" className=" text-gray-400 hover:underline">
             Chat with Baddie Birdie AI ✨
           </Link>
         </div>
       </div>
 
-      <section className="flex flex-col w-full px-4 mt-16 items-center">
-        <div className="w-full">
-          <h2 className="text-start text-xl mb-5 font-bold text-gray-500">
-            Game History
-          </h2>
-        </div>
-        <ul className="list-none p-0 w-full">
-          {gameHistory.map((game) => (
-            <li
-              key={game.id}
-              className="bg-gray-800 p-4 mb-3 rounded cursor-pointer hover:bg-gray-700"
-            >
-              <a href={`/stats/${game.id}`} className="block text-gray-300">
-                {game.name} - {game.date}
-              </a>
-            </li>
-          ))}
+      <section className="text-center">
+        <h2 className="text-2xl mb-5">Game History</h2>
+        <ul className="list-none p-0">
+          {games != null ? (
+            games.map((game, i) => (
+              <li
+                key={i + 1}
+                className="bg-gray-800 p-4 mb-3 rounded cursor-pointer hover:bg-gray-700 w-11/12 max-w-lg mx-auto"
+              >
+                <a href={`/stats/${i + 1}`} className="block text-gray-300">
+                  {`Game ${i + 1}`} - {game.date}
+                </a>
+              </li>
+            ))
+          ) : (
+            <div className="text-gray-600">No games uploaded yet</div>
+          )}
         </ul>
       </section>
 

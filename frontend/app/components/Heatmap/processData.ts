@@ -5,13 +5,13 @@ interface ResData {
   };
 }
 
-interface DataPoint {
+export interface Point {
   x: number;
   y: number;
   value: number;
 }
 
-interface Data {
+export interface Data {
   lData: DataPoint[];
   rData: DataPoint[];
 }
@@ -34,7 +34,6 @@ export function processResData(data: ResData): Data {
         pData.lData.push({
           x: scaledLX,
           y: scaledLY,
-          value: 1,
         });
     }
     if (d.top != null) {
@@ -44,7 +43,6 @@ export function processResData(data: ResData): Data {
         pData.rData.push({
           x: scaledRX,
           y: scaledRY,
-          value: 1,
         });
     }
   }
