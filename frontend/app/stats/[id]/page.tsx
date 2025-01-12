@@ -38,7 +38,7 @@ function StatsPage() {
         >
           ◀ Back
         </Link>
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+        <h1 className="mt-16 text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
           Game Stats
         </h1>
         <p className="text-gray-400">In-depth Analytics for Your Game</p>
@@ -48,9 +48,6 @@ function StatsPage() {
         {/* Shot Heatmap Section */}
         <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto">
           <h2 className="text-2xl font-semibold mb-4">Shot Heatmap</h2>
-          <p className="text-gray-400 mb-4">
-            Visualize where you lost your points during the game.
-          </p>
           <p className="text-gray-400 mb-4">
             Visualize where you lost your points during the game.
           </p>
@@ -87,11 +84,6 @@ function StatsPage() {
         <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto">
           <h2 className="text-2xl font-semibold mb-4">Movement Tracking</h2>
           <p className="text-gray-400 mb-4">Observe your movement patterns.</p>
-          <CourtHeatmap
-            data={heatmapData}
-            radius={10}
-            width={window.innerWidth * 0.8}
-          />
           <CourtHeatmap
             data={heatmapData}
             radius={10}
