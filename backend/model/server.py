@@ -31,9 +31,11 @@ def upload_video():
 
     return jsonify({'message': 'Video uploaded successfully!', 'file_path': filepath}), 200
 
+@app.route("/fetch_games", methods=["GET"])
+def fetch_games():
+    return jsonify(["test1","test2","test3","test4","test5","test6"])
 
 # Usage: /fetch_player_position?video_id=video_name
-
 @app.route('/fetch_player_position', methods=["GET"])
 def fetch_player_position():
     # Get cached res data
@@ -82,5 +84,23 @@ def fetch_player_position():
 
     return homography_result
 
+# Usage: /fetch_player_position?video_id=video_name
+@app.route("/fetch_birdie_end_pos", methods=["GET"])
+def fetch_biride_end_pos():
+    video_id = request.args.get('video_id')
+    if not video_id:
+        return jsonify({"error": "video_id is required"}), 400
+
+    results = fetch_ball_result(video_id)
+    court_data = fetch_court_result(video_id=video_id)
+    court_homography = CourtHomography(court_data["court_info"])
+
+    homography_result = []
+    for x, y in results:
+        h_res = court_homography.pixel_to_real_world((x,y))
+        homography_result.append(h_res)
+    
+    return jsonify({"pos": homography_result})
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5001)
