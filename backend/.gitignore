@@ -1,3 +1,4 @@
 videos/
 src/models/weights
 ShuttleSet
+.venv
