@@ -12,6 +12,9 @@ export default function Page() {
     { id: 3, name: "Game 3", date: "Jan 11th, 2025" },
     { id: 4, name: "Game 4", date: "Jan 12th, 2025" },
     { id: 5, name: "Game 5", date: "Jan 13th, 2025" },
+    { id: 6, name: "Game 6", date: "Jan 17th, 2025" },
+    { id: 7, name: "Game 7", date: "Jan 18th, 2025" },
+    { id: 8, name: "Game 8", date: "Jan 25th, 2025" },
   ];
 
   const [status, setStatus] = useState<string | null>(null);
@@ -86,8 +89,8 @@ export default function Page() {
   return (
     <div className="font-sans bg-gray-900 text-white min-h-screen p-5 relative pt-24">
       <LoadingOverlay isLoading={isLoading} />
-      <div className="text-center mb-10 flex flex-col space-y-2 px-16 items-center">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+      <div className="text-center mb-10 flex flex-col space-y-2 px-8 items-center">
+        <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent w-full">
           Baddy Buddy
         </h1>
         <p className="text-gray-400">Advanced Analytics for Badminton</p>
@@ -123,13 +126,17 @@ export default function Page() {
         </div>
       </div>
 
-      <section className="text-center">
-        <h2 className="text-2xl mb-5">Game History</h2>
-        <ul className="list-none p-0">
+      <section className="flex flex-col w-full px-4 mt-16 items-center">
+        <div className="w-full">
+          <h2 className="text-start text-xl mb-5 font-bold text-gray-500">
+            Game History
+          </h2>
+        </div>
+        <ul className="list-none p-0 w-full">
           {gameHistory.map((game) => (
             <li
               key={game.id}
-              className="bg-gray-800 p-4 mb-3 rounded cursor-pointer hover:bg-gray-700 w-11/12 max-w-lg mx-auto"
+              className="bg-gray-800 p-4 mb-3 rounded cursor-pointer hover:bg-gray-700"
             >
               <a href={`/stats/${game.id}`} className="block text-gray-300">
                 {game.name} - {game.date}
