@@ -3,20 +3,14 @@
 import React, { useEffect, useRef } from "react";
 import h337 from "heatmap.js";
 import Image from "next/image";
-
-interface DataPoint {
-  x: number;
-  y: number;
-  value: number;
-}
+import { DataPoint } from "./page";
 
 export const CourtHeatmap = ({
   data,
   radius,
   width,
 }: {
-  data: DataPoint[];
-  rData: DataPoint[];
+  data: Data;
   radius: number;
   width: number;
 }) => {
@@ -100,7 +94,7 @@ const Heatmap = ({
 
     // Add data to the heatmap
     heatmapInstance.setData({ max, data });
-  }, [data]); // Re-run the effect when data changes
+  }, [data, radius]); // Re-run the effect when data changes
 
   return (
     <div

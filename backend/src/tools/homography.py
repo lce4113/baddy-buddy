@@ -3,12 +3,12 @@ import cv2
 
 # Real-world coordinates in feet (standard singles court)
 real_world_coords = [
-    [0, 78],       # Top-left
-    [27, 78],      # Top-right
-    [0, 39],       # Mid-left
-    [27, 39],      # Mid-right
+    [0, 44],       # Top-left
+    [17, 44],      # Top-right
+    [0, 22],       # Mid-left
+    [17, 22],      # Mid-right
     [0, 0],        # Bottom-left
-    [27, 0]        # Bottom-right
+    [17, 0]        # Bottom-right
 ]
 
 class CourtHomography:

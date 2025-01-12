@@ -2,28 +2,27 @@
 
 import React, { useEffect, useState } from "react";
 import { CourtHeatmap } from "@/app/heatmap/Heatmap";
+import Link from "next/link";
 
 function StatsPage() {
-  const [data, setData] = useState({ lData: [], rData: [] });
-  const [windowWidth, setWindowWidth] = useState(100);
+  const [data, setData] = useState<string | null>({ lData: [], rData: [] });
 
   useEffect(() => {
     console.log("test");
     const storedData = JSON.parse(localStorage.getItem("mock_data"));
     // console.log(storedData);
     setData(storedData);
-    setWindowWidth(window.innerWidth);
   }, []);
 
   return (
     <div className="font-sans bg-gray-900 text-white min-h-screen p-5">
       <header className="text-center mb-10">
-        <a
+        <Link
           href="/"
-          className="absolute top-5 left-5 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
+          className="absolute top-5 left-5 px-4 py-2 text-white rounded hover:underline"
         >
           ◀ Back
-        </a>
+        </Link>
         <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
           Game Stats
         </h1>
@@ -74,7 +73,11 @@ function StatsPage() {
         <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto">
           <h2 className="text-2xl font-semibold mb-4">Movement Tracking</h2>
           <p className="text-gray-400 mb-4">Observe your movement patterns.</p>
-          <CourtHeatmap data={data} radius={10} width={windowWidth * 0.8} />
+          <CourtHeatmap
+            data={data}
+            radius={10}
+            width={window.innerWidth * 0.8}
+          />
         </section>
 
         <img

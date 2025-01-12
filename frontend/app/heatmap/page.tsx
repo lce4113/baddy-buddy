@@ -1,13 +1,38 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { CourtHeatmap } from "./Heatmap";
 
-// class Point {
-//   constructor() {
-//     this.curr = {
-//       x: Math.round(Math.random() * 100),
-//       y: Math.round(Math.random() * 100),
-//     };
-//   }
-//   move() {
+interface ResData {
+  [key: number]: {
+    bottom: number[];
+    top: number[];
+  };
+}
+
+interface DataPoint {
+  x: number;
+  y: number;
+  value: number;
+}
+
+export interface Data {
+  lData: DataPoint[];
+  rData: DataPoint[];
+}
+
+function processResData(data: ResData): Data {
+  const pData = { lData: [], rData: [] };
+
+  const cWidth = 43.9 / 2,
+    cHeight = 17,
+    cAlleyWidth = 1.4;
+  const scaleRX = (v) => Math.round(((v - cWidth) / cWidth) * 100);
+  const scaleLX = (v) => Math.round((v / cWidth) * 100);
+  const scaleY = (v) => Math.round(((v + cAlleyWidth) / cHeight) * 100);
+
+  for (const d of Object.values(data)) {
+    if (d.bottom != null) {
       const scaledLX = scaleLX(d.bottom[1]),
         scaledLY = scaleY(d.bottom[0]);
       if (scaledLX >= 0 && scaledLX <= 100 && scaledLY >= 0 && scaledLY <= 100)
@@ -65,6 +90,7 @@ export default function Home() {
         setData(newData);
         // console.log(newData.rData);
         // console.log("^ rData");
+        // console.log(processResData(resData));
         console.log(newData);
       })
       .catch((err) => {

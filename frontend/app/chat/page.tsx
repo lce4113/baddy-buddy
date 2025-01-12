@@ -4,6 +4,18 @@ import React, { useState, useRef } from "react";
 import { Anthropic } from "@anthropic-ai/sdk";
 import Link from "next/link";
 import { TextBlock } from "@anthropic-ai/sdk/resources/index.mjs";
+import ChatMessage from "./ChatMessage";
+
+const systemPrompt = `
+You are an expert AI badminton coach, highly skilled in analyzing player movement patterns and birdie placement on the court to provide actionable feedback and strategy recommendations.
+You will not respond to unrelated prompts, and instead bring their attention back to badminton.
+You will format your responses cleanly with markdown.
+
+Your Role:
+Analyze the player's movement across each game and the location of where the birdie lands on the court after each rally.
+Provide constructive, personalized feedback to help the player improve their badminton skills, focusing on areas such as positioning, footwork, shot selection, and strategy.
+Suggest drills, exercises, and in-game tactics based on observed data trends and patterns.
+`;
 
 export default function ChatPage() {
   // Initialize Anthropic client
@@ -16,7 +28,11 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Array<Anthropic.MessageParam>>([
     {
       role: "assistant",
-      content: "Hi! How can I help you today?",
+      content: `Hi! Let's improve your badminton game today.`,
+    },
+    {
+      role: "assistant",
+      content: `I've analyzed your previous games and can answer specific questions you have. For example: Which side is weakest for me?`,
     },
   ]);
   const [input, setInput] = useState("");
@@ -41,6 +57,7 @@ export default function ChatPage() {
       { role: "user", content: input },
     ];
     setMessages(newMessages);
+    setInput("");
     setIsLoading(true);
 
     try {
@@ -49,10 +66,11 @@ export default function ChatPage() {
       const msg = await anthropic.messages.create({
         model: "claude-3-5-sonnet-20241022",
         max_tokens: 1024,
+        system: systemPrompt,
         messages: newMessages,
       });
 
-      console.log(msg.content);
+      console.log(msg.content[0] ? (msg.content[0] as TextBlock).text : "");
 
       // Add the assistant's response to chat
       setMessages((prev) => [
@@ -77,11 +95,8 @@ export default function ChatPage() {
         },
       ]);
     } finally {
-      setInput("");
       setIsLoading(false);
     }
-
-    console.log(messages);
   };
 
   return (
@@ -109,31 +124,13 @@ export default function ChatPage() {
 
       {/* Messages Container */}
       <div className="flex-1 overflow-y-auto bg-gray-900">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto flex flex-col space-y-1">
           {messages.map((message, index) => (
-            <div
+            <ChatMessage
+              content={message.content as string}
+              role={message.role}
               key={index}
-              className={`p-4 ${
-                message.role === "assistant" ? "bg-gray-800" : "bg-gray-900"
-              }`}
-            >
-              <div className="max-w-2xl mx-auto flex space-x-4">
-                <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0">
-                  {message.role === "assistant" ? (
-                    <div className="bg-green-500 rounded-sm w-full h-full flex items-center justify-center text-white text-sm font-bold">
-                      BB
-                    </div>
-                  ) : (
-                    <div className="bg-gray-500 rounded-sm w-full h-full flex items-center justify-center text-white text-sm font-bold">
-                      U
-                    </div>
-                  )}
-                </div>
-                <div className="min-h-[20px] text-gray-100 flex-1">
-                  {message.content.toString()}
-                </div>
-              </div>
-            </div>
+            />
           ))}
           <div ref={messagesEndRef} />
         </div>
