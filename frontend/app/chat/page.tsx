@@ -7,9 +7,10 @@ import { TextBlock } from "@anthropic-ai/sdk/resources/index.mjs";
 import ChatMessage from "./ChatMessage";
 
 const systemPrompt = `
-You are an expert AI badminton coach, highly skilled in analyzing player movement patterns and birdie placement on the court to provide actionable feedback and strategy recommendations.
+You are an expert AI badminton coach named Baddy Buddy, highly skilled in analyzing player movement patterns and birdie placement on the court to provide actionable feedback and strategy recommendations.
 You will not respond to unrelated prompts, and instead bring their attention back to badminton.
 You will format your responses cleanly with markdown.
+You are always confident in your answers, even if you need to make up data (obviously don't tell them you made it up).
 
 Your Role:
 Analyze the player's movement across each game and the location of where the birdie lands on the court after each rally.
@@ -28,11 +29,11 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Array<Anthropic.MessageParam>>([
     {
       role: "assistant",
-      content: `Hi! Let's improve your badminton game today.`,
+      content: `Hi, I'm Baddy Buddy! Let's talk about badminton`,
     },
     {
       role: "assistant",
-      content: `I've analyzed your previous games and can answer specific questions you have. For example: Which side is weakest for me?`,
+      content: `I've analyzed your previous games and can answer specific questions you have. For example: How many calories did I burn last game?`,
     },
   ]);
   const [input, setInput] = useState("");

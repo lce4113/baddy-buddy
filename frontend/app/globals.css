@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -9,7 +10,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #0f172a;
     --foreground: #ededed;
   }
 }
@@ -22,15 +23,12 @@ body {
 
 .markdown > * {
   all: revert;
-  padding: 0px;
-  margin: 0px;
-  margin-top: 0px;
-  line-height: unset;
-  border: 0px;
-  margin: 0px;
 }
-.markdown p {
-  margin: 0px;
+.markdown > :first-child {
+  margin-top: 0px;
+}
+.markdown > :last-child {
+  margin-bottom: 0px;
 }
 
 .loading-overlay {

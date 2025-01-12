@@ -1,0 +1,23 @@
+{
+"first_rally_frame": 0,
+"next_rally_frame": 0,
+"court_info": null,
+"net_info": [
+    [
+        356,
+        348
+    ],
+    [
+        356,
+        495
+    ],
+    [
+        958,
+        495
+    ],
+    [
+        958,
+        348
+    ]
+]
+}

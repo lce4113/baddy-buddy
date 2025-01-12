@@ -1,17 +1,32 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { CourtHeatmap } from "@/app/components/Heatmap/Heatmap";
+import { CourtHeatmap } from "@/app/components/heatmap/Heatmap";
+import { ShotPlot } from "@/app/components/shotplot/Shotplot";
 import Link from "next/link";
 
 function StatsPage() {
-  const [data, setData] = useState<string | null>({ lData: [], rData: [] });
+  const [heatmapData, setHeatmapData] = useState<string | null>({
+    lData: [],
+    rData: [],
+  });
+  const [shotplotData, setShotplotData] = useState<string | null>({
+    lData: [],
+    rData: [],
+  });
 
   useEffect(() => {
     console.log("test");
-    const storedData = JSON.parse(localStorage.getItem("mock_data"));
-    // console.log(storedData);
-    setData(storedData);
+    const hData = JSON.parse(localStorage.getItem("heatmap_data"));
+    if (hData) {
+      setHeatmapData(hData);
+    }
+    console.log(hData);
+    const sData = JSON.parse(localStorage.getItem("shotplot_data"));
+    if (sData) {
+      setShotplotData(sData);
+    }
+    console.log(sData);
   }, []);
 
   return (
@@ -36,11 +51,7 @@ function StatsPage() {
           <p className="text-gray-400 mb-4">
             Visualize where you lost your points during the game.
           </p>
-          <div className="bg-gray-700 h-64 flex items-center justify-center rounded">
-            <span className="text-gray-500">
-              [Heatmap Visualization Placeholder]
-            </span>
-          </div>
+          <ShotPlot data={shotplotData} width={window.innerWidth * 0.8} />
         </section>
 
         {/* Point Differential Section */}
@@ -74,7 +85,7 @@ function StatsPage() {
           <h2 className="text-2xl font-semibold mb-4">Movement Tracking</h2>
           <p className="text-gray-400 mb-4">Observe your movement patterns.</p>
           <CourtHeatmap
-            data={data}
+            data={heatmapData}
             radius={10}
             width={window.innerWidth * 0.8}
           />
