@@ -119,6 +119,8 @@ def fetch_biride_end_pos():
         return jsonify({"error": "video_id is required"}), 400
 
     results = fetch_ball_result(video_id)
+    print("results: ")
+    print(results)
     court_data = fetch_court_result(video_id=video_id)
     court_homography = CourtHomography(court_data["court_info"])
 
@@ -126,7 +128,8 @@ def fetch_biride_end_pos():
     for x, y in results:
         h_res = court_homography.pixel_to_real_world((x,y))
         homography_result.append(h_res)
-    
+    d = jsonify({"pos": homography_result})
+    print(homography_result)
     return jsonify({"pos": homography_result})
 
 if __name__ == '__main__':

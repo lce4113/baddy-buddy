@@ -36,6 +36,7 @@ def fetch_ball_result(video_id):
     # Get all files in the folder
     for file_name in os.listdir(folder_path):
         if file_name.endswith('.json'):  # Check for JSON files
+            print("in")
             file_path = os.path.join(folder_path, file_name)
 
             # Open and load the JSON file
@@ -43,14 +44,23 @@ def fetch_ball_result(video_id):
                 data = json.load(json_file)
 
                 # Get the last element in the JSON object
-                if data:
-                    last_key = sorted(data.keys(), key=int)[-1]  # Get the last key numerically
-                    last_element = data[last_key]
+                last_key = sorted(data.keys(), key=int)[-1]  # Get the last key numerically
+                x = -1
+                y=-1
+                for key in data.keys():
 
-                    # Extract x and y if visible
-                    if last_element.get("visible") == 1:
-                        x = last_element.get("x")
-                        y = last_element.get("y")
-                        results.append((x, y))
+                    if data[key]["visible"] == 1:
+                        x = data[key]['x']
+                        y = data[key]['y']
+                if(x!=-1 and y!=-1):
+                    results.append((x, y))
+                # if data:
+                #     last_element = data[last_key]
+
+                #     # Extract x and y if visible
+                #     if last_element.get("visible") == 1:
+                #         x = last_element.get("x")
+                #         y = last_element.get("y")
+                #         results.append((x, y))
 
     return results
