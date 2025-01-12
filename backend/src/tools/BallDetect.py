@@ -69,7 +69,7 @@ def ball_detect(video_path,result_path):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     model = TrackNet().to(device)
-    model.load_state_dict(torch.load("src/models/weights/ball_track.pt", map_location=torch.device('cpu')))
+    model.load_state_dict(torch.load("src/models/weights/ball_track.pt", map_location=torch.device(device)))
     model.eval()
 
     vid_cap = cv2.VideoCapture(f_source)
