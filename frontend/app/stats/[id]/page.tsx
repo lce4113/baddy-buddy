@@ -2,17 +2,24 @@
 
 import React, { useEffect, useState } from 'react';
 import { CourtHeatmap } from '@/app/heatmap/Heatmap';
+import { ShotPlot } from '@/app/shotplot/Shotplot';
 
 function StatsPage() {
-  const [data, setData] = useState<string | null>({lData: [], rData: []});
+  const [heatmapData, setHeatmapData] = useState<string | null>({lData: [], rData: []});
+  const [shotplotData, setShotplotData] = useState<string | null>({lData: [], rData: []});
 
   useEffect(() => {
     console.log("test");
-    const storedData = JSON.parse(localStorage.getItem("mock_data"));
-    if (storedData) {
-      setData(storedData);
+    const hData = JSON.parse(localStorage.getItem("heatmap_data"));
+    if (hData) {
+      setHeatmapData(hData);
     }
-    console.log(storedData);
+    console.log(hData);
+    const sData = JSON.parse(localStorage.getItem("shotplot_data"));
+    if (sData) {
+      setShotplotData(sData);
+    }
+    console.log(sData);
   }, []);
 
   return (
@@ -32,9 +39,7 @@ function StatsPage() {
         <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto">
           <h2 className="text-2xl font-semibold mb-4">Shot Heatmap</h2>
           <p className="text-gray-400 mb-4">Visualize where you lost your points during the game.</p>
-          <div className="bg-gray-700 h-64 flex items-center justify-center rounded">
-            <span className="text-gray-500">[Heatmap Visualization Placeholder]</span>
-          </div>
+          <ShotPlot data={shotplotData} width={window.innerWidth * 0.8} />
         </section>
 
         {/* Point Differential Section */}
@@ -59,7 +64,7 @@ function StatsPage() {
         <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto">
           <h2 className="text-2xl font-semibold mb-4">Movement Tracking</h2>
           <p className="text-gray-400 mb-4">Observe your movement patterns.</p>
-          <CourtHeatmap data={data} radius={10} width={window.innerWidth * 0.8} />
+          <CourtHeatmap data={heatmapData} radius={10} width={window.innerWidth * 0.8} />
         </section>
 
         <img
