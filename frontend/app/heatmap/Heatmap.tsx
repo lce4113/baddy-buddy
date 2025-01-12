@@ -11,12 +11,11 @@ interface DataPoint {
 }
 
 export const CourtHeatmap = ({
-  lData,
-  rData,
+  data,
   radius,
   width,
 }: {
-  lData: DataPoint[];
+  data: DataPoint[];
   rData: DataPoint[];
   radius: number;
   width: number;
@@ -47,7 +46,7 @@ export const CourtHeatmap = ({
         }}
       />
       <Heatmap
-        data={lData}
+        data={data.lData}
         radius={radius}
         width={courtWidth}
         height={courtHeight}
@@ -55,7 +54,7 @@ export const CourtHeatmap = ({
         top={y_margin}
       />
       <Heatmap
-        data={rData}
+        data={data.rData}
         radius={radius}
         width={courtWidth}
         height={courtHeight}
