@@ -3,6 +3,8 @@ from flask_cors import CORS
 import os
 import json
 import pandas as pd
+import subprocess
+from threading import Thread
 
 from src.tools.homography import CourtHomography
 from src.tools.result_fetcher import fetch_ball_result, fetch_court_result, fetch_player_result
@@ -16,8 +18,27 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
+
+def run_video_processing():
+    print("running video processing")
+    command = [
+        "python", "main.py",
+        "--folder_path", "videos",
+        "--result_path", "res",
+    ]
+    log_file = "video_processing.log"
+    with open(log_file, "a") as log:
+        try:
+            print("should")
+            log.write("Starting video processing...\n")
+            subprocess.run(command, check=True)
+            log.write("Video processing completed successfully.\n")
+        except subprocess.CalledProcessError as e:
+            log.write(f"Error during video processing: {e}\n")
+
 @app.route('/upload', methods=['POST'])
 def upload_video():
+    print("in")
     if 'video' not in request.files:
         return jsonify({'error': 'No video file part'}), 400
     
@@ -28,6 +49,9 @@ def upload_video():
     # Save the video
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
     file.save(filepath)
+
+
+    run_video_processing()
 
     return jsonify({'message': 'Video uploaded successfully!', 'file_path': filepath}), 200
 
@@ -103,4 +127,4 @@ def fetch_biride_end_pos():
     return jsonify({"pos": homography_result})
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5001)
+    app.run(host="0.0.0.0", port=5000)
