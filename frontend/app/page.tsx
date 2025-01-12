@@ -12,7 +12,7 @@ export default function Page() {
   const [games, setGames] = useState<[]>([]);
 
   useEffect(() => {
-    setGames(JSON.parse(localStorage.getItem("games")));
+    setGames(JSON.parse(localStorage.getItem("games") as string));
   }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +33,7 @@ export default function Page() {
     formData.append("video", file);
 
     try {
-      const PORT = "http://169.231.212.56:5001/";
+      const PORT = process.env.NEXT_PUBLIC_SERVER_URL;
       const response = await fetch(PORT + "/upload", {
         method: "POST",
         body: formData,
@@ -126,7 +126,7 @@ export default function Page() {
             {status != null && (
               <p
                 className={`mt-3 ${
-                  status.includes("Error") ? "text-red-500" : "text-green-500"
+                  status.includes("failed") ? "text-red-500" : "text-green-500"
                 }`}
               >
                 {status}
@@ -143,16 +143,20 @@ export default function Page() {
       <section className="text-center">
         <h2 className="text-2xl mb-5">Game History</h2>
         <ul className="list-none p-0">
-          {games.map((game, i) => (
-            <li
-              key={i + 1}
-              className="bg-gray-800 p-4 mb-3 rounded cursor-pointer hover:bg-gray-700 w-11/12 max-w-lg mx-auto"
-            >
-              <a href={`/stats/${i + 1}`} className="block text-gray-300">
-                {`Game ${i + 1}`} - {game.date}
-              </a>
-            </li>
-          ))}
+          {games != null ? (
+            games.map((game, i) => (
+              <li
+                key={i + 1}
+                className="bg-gray-800 p-4 mb-3 rounded cursor-pointer hover:bg-gray-700 w-11/12 max-w-lg mx-auto"
+              >
+                <a href={`/stats/${i + 1}`} className="block text-gray-300">
+                  {`Game ${i + 1}`} - {game.date}
+                </a>
+              </li>
+            ))
+          ) : (
+            <div className="text-gray-600">No games uploaded yet</div>
+          )}
         </ul>
       </section>
 
