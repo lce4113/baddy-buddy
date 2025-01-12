@@ -38,7 +38,7 @@ export default function ChatPage() {
     {
       role: "assistant",
       content: `Previous Game Statistics
-      ![Image](/court.jpg)
+      ![Image](/demo/player-heatmap.png)
       ![Image](/court.jpg)`,
     },
   ]);

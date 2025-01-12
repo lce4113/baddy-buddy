@@ -104,9 +104,10 @@ export default function Page() {
     <div className="font-sans bg-gray-900 text-white min-h-screen p-5 relative pt-24">
       <LoadingOverlay isLoading={isLoading} />
       <div className="text-center mb-10 flex flex-col space-y-2 px-8 items-center">
-        <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent w-full">
+        <h1 className="text-5xl p-1 font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent w-full bg-[length:200%_200%] animate-gradient">
           Baddy Buddy
         </h1>
+
         <p className="text-gray-400">Advanced Analytics for Badminton</p>
         <div className="py-8">
           <input
@@ -134,7 +135,7 @@ export default function Page() {
             )}
           </div>
           <div className="h-2" />
-          <Link href="/chat" className="text-gray-400 hover:underline">
+          <Link href="/chat" className=" text-gray-400 hover:underline">
             Chat with Baddie Birdie AI ✨
           </Link>
         </div>
