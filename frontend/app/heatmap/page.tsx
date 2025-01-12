@@ -91,6 +91,7 @@ export default function Home() {
         // console.log(newData.rData);
         // console.log("^ rData");
         // console.log(processResData(resData));
+        console.log(newData);
       })
       .catch((err) => {
         console.error("Fetch error:", err);
