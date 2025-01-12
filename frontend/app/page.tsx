@@ -103,7 +103,7 @@ export default function Page() {
   return (
     <div className="font-sans bg-gray-900 text-white min-h-screen p-5 relative pt-24">
       <LoadingOverlay isLoading={isLoading} />
-      <div className="text-center mb-10 flex flex-col space-y-2 px-8 items-center">
+      <div className="text-center mb-10 flex flex-col space-y-2 px-6 items-center">
         <h1 className="text-5xl p-1 font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent w-full bg-[length:200%_200%] animate-gradient">
           Baddy Buddy
         </h1>
@@ -140,7 +140,6 @@ export default function Page() {
           </Link>
         </div>
       </div>
-
       <section className="text-center">
         <h2 className="text-2xl mb-5">Game History</h2>
         <ul className="list-none p-0">
@@ -160,21 +159,6 @@ export default function Page() {
           )}
         </ul>
       </section>
-
-      {/* Chatbot Trigger */}
-      <Link
-        href="/chat"
-        passHref
-        className="fixed bottom-5 right-4 w-24 h-24 object-contain transition duration-300 ease-in-out animate-wiggle"
-      >
-        <Image
-          src="/birdie-baddie.png"
-          alt="Decorative Graphic"
-          className=""
-          layout="fill"
-          objectFit="cover"
-        />
-      </Link>
     </div>
   );
 }

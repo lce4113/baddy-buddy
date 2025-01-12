@@ -1,4 +1,5 @@
 import { ShotPlot } from "./Shotplot";
+import Image from "next/image";
 
 export default function Home() {
   const data = [
@@ -13,7 +14,8 @@ export default function Home() {
   return (
     <div>
       <div>shotplot page</div>
-      <ShotPlot data={data} width={300} />
+      <Image src={"/demo/shot-scatter.png"} alt="HI" width={300} height={200} />
+      {/* <ShotPlot data={data} width={300} /> */}
     </div>
   );
 }

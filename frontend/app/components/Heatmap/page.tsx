@@ -1,4 +1,5 @@
 import { CourtHeatmap } from "./Heatmap";
+import Image from "next/image";
 
 export default function Home() {
   const lData = [];
@@ -17,7 +18,13 @@ export default function Home() {
   return (
     <>
       <div>heatmap page</div>
-      <CourtHeatmap data={data} radius={20} width={300} />
+      {/* <CourtHeatmap data={data} radius={20} width={300} /> */}
+      <Image
+        src={"/demo/player-heatmap.png"}
+        alt="HI"
+        width={300}
+        height={200}
+      />
     </>
   );
 }

@@ -55,7 +55,7 @@ export const ShotPlot = ({ data, width }: { data: ResData; width: number }) => {
     >
       {/* Background Court Image */}
       <Image
-        src="/court.jpg"
+        src="/demo/shot-scatter.png"
         className="absolute"
         width={width}
         height={height}
@@ -65,7 +65,7 @@ export const ShotPlot = ({ data, width }: { data: ResData; width: number }) => {
           height: `${height}px`,
         }}
       />
-
+      {/* 
       {data.map((point, index) => (
         <div
           key={`lData-${index}`}
@@ -78,7 +78,7 @@ export const ShotPlot = ({ data, width }: { data: ResData; width: number }) => {
             top: `${point.y}px`,
           }}
         ></div>
-      ))}
+      ))} */}
     </div>
   );
 };

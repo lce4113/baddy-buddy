@@ -38,8 +38,8 @@ export default function ChatPage() {
     {
       role: "assistant",
       content: `Previous Game Statistics
-      ![Image](/demo/player-heatmap.png)
-      ![Image](/court.jpg)`,
+      ![Image](/demo/demo-heatmap.png)
+      ![Image](/demo/shot-scatter.png)`,
     },
   ]);
   const [input, setInput] = useState("");

@@ -9,7 +9,7 @@ import PlayerDistance from "@/app/components/distance/Distance";
 import Markdown from "react-markdown";
 
 function StatsPage() {
-  const [response, setResponse] = useState<string>('Click to generate');
+  const [response, setResponse] = useState<string>("Click to generate");
   const [loading, setLoading] = useState(false);
 
   const analyzeGame = async () => {
@@ -28,7 +28,7 @@ Analyze the player's movement across each game and the location of where the bir
 Provide constructive, personalized feedback to help the player improve their badminton skills, focusing on areas such as positioning, footwork, shot selection, and strategy.
 Suggest drills, exercises, and in-game tactics based on observed data trends and patterns.
 `, // Your system prompt here
-"/demo/player-heatmap.png"
+        "/demo/player-heatmap.png"
       );
       setResponse(result);
     } catch (error) {
@@ -103,9 +103,16 @@ Suggest drills, exercises, and in-game tactics based on observed data trends and
         </section>
 
         <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto">
-          <h2 onClick={analyzeGame} className="text-2xl mb-3 p-1 font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent w-full bg-[length:200%_200%] animate-gradient">Baddie Birdie AI Analysis</h2>
+          <h2
+            onClick={analyzeGame}
+            className="text-2xl mb-3 p-1 font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent w-full bg-[length:200%_200%] animate-gradient"
+          >
+            Baddie Birdie AI Analysis
+          </h2>
           {loading && <p>Loading...</p>}
-          {response && <Markdown className={"markdown text-md"}>{response}</Markdown>}
+          {response && (
+            <Markdown className={"markdown text-md"}>{response}</Markdown>
+          )}
         </section>
         {/* Distance Tracking Section */}
         <section className="bg-gray-800 p-6 rounded shadow-md max-w-4xl mx-auto flex flex-col">
@@ -115,12 +122,6 @@ Suggest drills, exercises, and in-game tactics based on observed data trends and
           </p>
           <PlayerDistance data={heatmapData} />
         </section>
-
-        <img
-          src="/birdie-baddie.png"
-          alt="Decorative Graphic"
-          className="fixed bottom-5 right-5 w-20 h-20 object-contain max-w-xs transition duration-300 ease-in-out hover:scale-150"
-        />
       </main>
     </div>
   );

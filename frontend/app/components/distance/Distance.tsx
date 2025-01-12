@@ -39,7 +39,7 @@ const PlayerDistance = ({ data }: { data: any }) => {
         </div>
         <div className="bg-gray-700 rounded-lg p-6">
           <div className="font-bold">Calories</div>
-          <div>{(totalDistance * 0.06).toFixed(2)} Cal</div>
+          <div>{(totalDistance * 0.04).toFixed(2)} Cal</div>
         </div>
       </div>
     </div>
